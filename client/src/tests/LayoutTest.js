@@ -5,9 +5,13 @@ import GameHUD from '../components/game/GameHud';
 import StoryMode from '../components/game/StoryMode';
 import VersusMode from '../components/game/VersusMode';
 import TrainingMode from '../components/game/TrainingMode';
+import GameOver from '../components/game/GameOver';
+import CharacterSelect from '../components/ui/CharacterSelect';
 import useInput from '../hooks/useInput';
 import useCharacterController from '../hooks/useCharacterController';
 import useGameLoop from '../hooks/useGameLoop';
+import useCollisionDetection from '../hooks/useCollisionDetection';
+import useAnimation from '../hooks/useAnimation';
 
 const LayoutTest = () => {
   const gameContainerRef = useRef(null);
@@ -15,6 +19,12 @@ const LayoutTest = () => {
   const [characterPos, setCharacterPos] = useState({ x: 50, y: 50 });
   const { updateCharacter } = useCharacterController(characterPos, setCharacterPos);
   const [gameLoopCount, setGameLoopCount] = useState(0);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const { checkCollision } = useCollisionDetection();
+  
+  // Simple animation frames for demonstration
+  const animationFrames = ['Frame1', 'Frame2', 'Frame3', 'Frame4'];
+  const currentAnimationFrame = useAnimation(animationFrames, 200);
 
   useGameLoop(
     (deltaTime) => {
@@ -37,6 +47,13 @@ const LayoutTest = () => {
     }
   }, [input, isFocused]);
 
+  // Collision detection test
+  const obstacle = { x: 100, y: 100, width: 50, height: 50 };
+  const isColliding = checkCollision(
+    { x: characterPos.x, y: characterPos.y, width: 50, height: 100 },
+    obstacle
+  );
+
   return (
     <div className="layout-test">
       <h1>Component Test Layout</h1>
@@ -47,51 +64,50 @@ const LayoutTest = () => {
         tabIndex={0}
         style={{ outline: isFocused ? '2px solid blue' : 'none' }}
       >
+        {/* Existing components */}
+        {/* ... */}
+
         <div className="showcase-item">
-          <h2>Character Component</h2>
+          <h2>GameOver Component</h2>
+          <GameOver 
+            score={1000} 
+            onRestart={() => console.log('Restart')} 
+            onMainMenu={() => console.log('Main Menu')} 
+          />
+        </div>
+
+        <div className="showcase-item">
+          <h2>CharacterSelect Component</h2>
+          <CharacterSelect onSelect={setSelectedCharacter} />
+          {selectedCharacter && <p>Selected: {selectedCharacter.name}</p>}
+        </div>
+
+        <div className="showcase-item">
+          <h2>useCollisionDetection Test</h2>
           <div style={{ position: 'relative', width: 200, height: 200, border: '1px solid black' }}>
-            <Character x={75} y={50} width={50} height={100} />
+            <div style={{
+              position: 'absolute',
+              left: characterPos.x,
+              top: characterPos.y,
+              width: 50,
+              height: 100,
+              backgroundColor: isColliding ? 'red' : 'green'
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              left: obstacle.x,
+              top: obstacle.y,
+              width: obstacle.width,
+              height: obstacle.height,
+              backgroundColor: 'gray'
+            }}></div>
           </div>
+          <p>Collision: {isColliding ? 'Yes' : 'No'}</p>
         </div>
 
         <div className="showcase-item">
-          <h2>useCharacterController Test</h2>
-          <div style={{ position: 'relative', width: 200, height: 200, border: '1px solid black', overflow: 'hidden' }}>
-            <Character x={characterPos.x} y={characterPos.y} width={50} height={100} />
-          </div>
-          <p>Character Position: x: {characterPos.x.toFixed(2)}, y: {characterPos.y.toFixed(2)}</p>
-          <p>Game Area Focused: {isFocused ? 'Yes' : 'No'}</p>
-          <p>Click here and use arrow keys or WASD to move the character</p>
-        </div>
-
-        <div className="showcase-item">
-          <h2>useGameLoop Test</h2>
-          <p>Game Loop Count: {gameLoopCount}</p>
-        </div>
-
-        <div className="showcase-item">
-          <h2>BattleArena Component</h2>
-          <BattleArena width={600} height={400} />
-        </div>
-
-        <div className="showcase-item">
-          <h2>GameHUD Component</h2>
-          <GameHUD health={75} score={1000} time={120} />
-        </div>
-
-        <div className="showcase-item">
-          <h2>StoryMode Component</h2>
-          <StoryMode />
-        </div>
-
-        <div className="showcase-item">
-          <h2>VersusMode Component</h2>
-          <VersusMode />
-        </div>
-
-        <div className="showcase-item">
-          <h2>TrainingMode Component</h2>
-          <TrainingMode />
+          <h2>useAnimation Test</h2>
+          <p>Current Animation Frame: {currentAnimationFrame}</p>
         </div>
       </div>
 
@@ -105,10 +121,9 @@ const LayoutTest = () => {
         <h2>Instructions</h2>
         <p>Click on the game area (outlined in blue when focused) to enable controls.</p>
         <p>Use arrow keys or WASD to move the character in the useCharacterController test.</p>
-        <p>Observe the Character Position updating as you move.</p>
-        <p>Watch the Game Loop Count increase to see useGameLoop in action.</p>
-        <p>Check the Input State to see which keys are currently pressed.</p>
-        <p>Note: Arrow keys will only be captured when the game area is focused.</p>
+        <p>Observe the collision detection as the character moves.</p>
+        <p>Watch the animation frame change in the useAnimation test.</p>
+        <p>Interact with the CharacterSelect and GameOver components.</p>
       </div>
     </div>
   );
