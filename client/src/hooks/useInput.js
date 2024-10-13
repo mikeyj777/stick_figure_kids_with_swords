@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const useInput = (gameContainerRef) => {
-  console.log("gameContainerRef", gameContainerRef);
   const [input, setInput] = useState({
     up: false,
     down: false,
@@ -9,12 +8,29 @@ const useInput = (gameContainerRef) => {
     right: false,
     attack: false,
   });
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = useCallback(() => setIsFocused(true), []);
+  const handleBlur = useCallback(() => setIsFocused(false), []);
+
+  useEffect(() => {
+    const gameContainer = gameContainerRef?.current;
+    if (gameContainer) {
+      gameContainer.addEventListener('focus', handleFocus);
+      gameContainer.addEventListener('blur', handleBlur);
+    }
+
+    return () => {
+      if (gameContainer) {
+        gameContainer.removeEventListener('focus', handleFocus);
+        gameContainer.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, [gameContainerRef, handleFocus, handleBlur]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (gameContainerRef.current && !gameContainerRef.current.contains(document.activeElement)) {
-        return; // If the game container is not focused, don't prevent default
-      }
+      if (!isFocused) return; // Only handle keys when focused
 
       switch (event.key.toLowerCase()) {
         case 'w':
@@ -46,6 +62,8 @@ const useInput = (gameContainerRef) => {
     };
 
     const handleKeyUp = (event) => {
+      if (!isFocused) return; // Only handle keys when focused
+
       switch (event.key.toLowerCase()) {
         case 'w':
         case 'arrowup':    setInput(prev => ({ ...prev, up: false })); break;
@@ -67,9 +85,9 @@ const useInput = (gameContainerRef) => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [gameContainerRef]);
+  }, [isFocused]);
 
-  return input;
+  return { input, isFocused };
 };
 
 export default useInput;
