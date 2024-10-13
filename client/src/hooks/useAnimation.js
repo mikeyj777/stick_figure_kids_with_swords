@@ -1,16 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 const useAnimation = (frames, frameDuration) => {
   const [currentFrame, setCurrentFrame] = useState(0);
 
-  const nextFrame = useCallback(() => {
-    setCurrentFrame((prevFrame) => (prevFrame + 1) % frames.length);
-  }, [frames.length]);
-
   useEffect(() => {
-    const animationInterval = setInterval(nextFrame, frameDuration);
+    const animationInterval = setInterval(() => {
+      setCurrentFrame((prevFrame) => (prevFrame + 1) % frames.length);
+    }, frameDuration);
+
     return () => clearInterval(animationInterval);
-  }, [nextFrame, frameDuration]);
+  }, [frames.length, frameDuration]);
 
   return frames[currentFrame];
 };

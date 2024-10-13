@@ -1,17 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from './UIComponents';
 
-const MainMenu = () => {
-  const navigate = useNavigate();
-
+const MainMenu = ({ onStartGame, onOptions, onCredits }) => {
   return (
     <div className="main-menu">
-      <h1 className="game-title">Stick Figure Kids with Swords</h1>
-      <div className="menu-buttons">
-        <Button onClick={() => navigate('/play')}>Play</Button>
-        <Button onClick={() => navigate('/options')}>Options</Button>
-        <Button onClick={() => navigate('/credits')}>Credits</Button>
+      <h1 className="main-title">Stick Figure Kids with Swords</h1>
+      <div className="button-container">
+        <Button onClick={onStartGame} className="menu-button">Start Game</Button>
+        <Button onClick={onOptions} className="menu-button">Options</Button>
+        <Button onClick={onCredits} className="menu-button">Credits</Button>
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
 import { useRef, useEffect } from 'react';
 
-const useGameLoop = (updateFunction) => {
+const useGameLoop = (update) => {
   const requestRef = useRef();
   const previousTimeRef = useRef();
 
   const gameLoop = (time) => {
     if (previousTimeRef.current !== undefined) {
       const deltaTime = time - previousTimeRef.current;
-      updateFunction(deltaTime);
+      update(deltaTime);
     }
     previousTimeRef.current = time;
     requestRef.current = requestAnimationFrame(gameLoop);
@@ -16,9 +16,9 @@ const useGameLoop = (updateFunction) => {
   useEffect(() => {
     requestRef.current = requestAnimationFrame(gameLoop);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [updateFunction]); // Add updateFunction to the dependency array
+  }, [update]);
 
-  return null; // This hook doesn't need to return anything
+  return null;
 };
 
 export default useGameLoop;

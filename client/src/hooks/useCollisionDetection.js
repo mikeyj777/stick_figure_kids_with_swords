@@ -10,11 +10,7 @@ const useCollisionDetection = () => {
     );
   }, []);
 
-  const checkCollisions = useCallback((object, obstacles) => {
-    return obstacles.some(obstacle => checkCollision(object, obstacle));
-  }, [checkCollision]);
-
-  return { checkCollision, checkCollisions };
+  return { checkCollision };
 };
 
-export default useCollisionDetection; 
+export default useCollisionDetection;
