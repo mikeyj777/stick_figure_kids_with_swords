@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const useInput = (gameContainerRef) => {
+  console.log("gameContainerRef", gameContainerRef);
   const [input, setInput] = useState({
     up: false,
     down: false,

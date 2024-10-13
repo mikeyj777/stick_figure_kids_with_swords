@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import BattleArena from '../components/game/BattleArena';
 import Character from '../components/core/Character';
 import useInput from '../hooks/useInput';
@@ -6,26 +6,26 @@ import useCharacterController from '../hooks/useCharacterController';
 import useGameLoop from '../hooks/useGameLoop';
 
 const LayoutTest = () => {
-  const input = useInput();
+  const gameContainerRef = useRef(null);
+  const input = useInput(gameContainerRef);
   const [characterPos, setCharacterPos] = useState({ x: 50, y: 50 });
   const { updateCharacter } = useCharacterController(characterPos, setCharacterPos);
   const [gameLoopCount, setGameLoopCount] = useState(0);
 
-  // Test for useGameLoop
   useGameLoop(
     (deltaTime) => {
       setGameLoopCount(prev => prev + 1);
       updateCharacter(input, deltaTime);
     },
-    () => {} // We're using React for rendering, so this is empty
+    () => {}
   );
 
   return (
     <div className="layout-test">
       <h1>Component Test Layout</h1>
 
-      <div className="component-showcase">
-        <div className="showcase-item">
+      <div className="component-showcase" ref={gameContainerRef} tabIndex="0">
+      <div className="showcase-item">
           <h2>Character Component</h2>
           <div style={{ position: 'relative', width: 200, height: 200, border: '1px solid black' }}>
             <Character x={75} y={50} width={50} height={100} />
@@ -58,14 +58,14 @@ const LayoutTest = () => {
 
       <div className="instructions">
         <h2>Instructions</h2>
+        <p>Click on the game area to focus it.</p>
         <p>Use arrow keys or WASD to move the character in the useCharacterController test and BattleArena.</p>
         <p>Press spacebar to attack (rotate sword) in BattleArena.</p>
         <p>Observe the Game Loop Count to see useGameLoop in action.</p>
         <p>Check the Input State to see which keys are currently pressed.</p>
-    </div>
+      </div>
     </div>
   );
 };
 
 export default LayoutTest;
-
