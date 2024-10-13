@@ -1,57 +1,28 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 
-const Sword = ({ x, y, length, angle, color = 'gray' }) => {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
-    // Clear the canvas
-    ctx.clearRect(0, 0, length, length);
-
-    // Save the canvas state
-    ctx.save();
-
-    // Move to the center of the canvas
-    ctx.translate(length / 2, length / 2);
-
-    // Rotate the canvas
-    ctx.rotate(angle);
-
-    // Draw the sword
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 3;
-
-    // Blade
-    ctx.beginPath();
-    ctx.moveTo(0, -length / 2);
-    ctx.lineTo(0, length / 2 - 10);
-    ctx.stroke();
-
-    // Guard
-    ctx.beginPath();
-    ctx.moveTo(-10, length / 2 - 10);
-    ctx.lineTo(10, length / 2 - 10);
-    ctx.stroke();
-
-    // Handle
-    ctx.beginPath();
-    ctx.moveTo(0, length / 2 - 10);
-    ctx.lineTo(0, length / 2);
-    ctx.stroke();
-
-    // Restore the canvas state
-    ctx.restore();
-  }, [length, angle, color]);
+const Sword = ({ x, y, length, angle, color }) => {
+  const endX = x + length * Math.cos(angle);
+  const endY = y + length * Math.sin(angle);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={length}
-      height={length}
-      style={{ position: 'absolute', left: x, top: y }}
-    />
+    <g>
+      <line
+        x1={x}
+        y1={y}
+        x2={endX}
+        y2={endY}
+        stroke={color}
+        strokeWidth="3"
+      />
+      <line
+        x1={x - 5 * Math.cos(angle + Math.PI/2)}
+        y1={y - 5 * Math.sin(angle + Math.PI/2)}
+        x2={x + 5 * Math.cos(angle + Math.PI/2)}
+        y2={y + 5 * Math.sin(angle + Math.PI/2)}
+        stroke={color}
+        strokeWidth="2"
+      />
+    </g>
   );
 };
 

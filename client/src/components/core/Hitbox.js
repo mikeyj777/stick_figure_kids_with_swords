@@ -1,19 +1,18 @@
 import React from 'react';
 
 const Hitbox = ({ x, y, width, height, active }) => {
-  // In a real game, you wouldn't typically render the hitbox visually.
-  // This is just for demonstration and debugging purposes.
-  const style = {
-    position: 'absolute',
-    left: x,
-    top: y,
-    width: width,
-    height: height,
-    border: `2px solid ${active ? 'red' : 'green'}`,
-    opacity: 0.5,
-  };
-
-  return <div style={style} />;
+  return (
+    <rect
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      fill="none"
+      stroke={active ? "red" : "green"}
+      strokeWidth="2"
+      opacity="0.5"
+    />
+  );
 };
 
 export const checkCollision = (hitbox1, hitbox2) => {
