@@ -1,0 +1,47 @@
+.layout-test {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.component-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.showcase-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.showcase-item h2 {
+  margin-bottom: 10px;
+}
+
+.input-display {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.input-display pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.instructions {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+.instructions p {
+  margin: 5px 0;
+}
