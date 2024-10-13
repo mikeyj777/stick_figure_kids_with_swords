@@ -1,27 +1,33 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 .layout-test {
   font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 20px;
 }
 
-.main-menu {
-  max-width: 300px;
-  margin: 0 auto;
+.game-area {
+  width: 400px;
+  height: 400px;
+  border: 1px solid #000;
+  position: relative;
+  margin-bottom: 20px;
 }
 
-.character-select {
-  max-width: 600px;
-  margin: 0 auto;
+.character {
+  background-color: blue;
+  position: absolute;
+  transition: all 0.1s ease;
 }
 
-.character-option {
-  transition: all 0.3s ease;
+.obstacle {
+  background-color: red;
+  position: absolute;
 }
 
-.character-avatar {
-  border-radius: 50%;
+.info-panel {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.info-panel p {
+  margin: 5px 0;
 }
