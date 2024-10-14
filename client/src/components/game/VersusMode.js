@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
-import BattleArena from './BattleArena';
-import GameHUD from './GameHud';
 
-const VersusMode = () => {
-  const [player1Health, setPlayer1Health] = useState(100);
-  const [player2Health, setPlayer2Health] = useState(100);
-  const [roundTime, setRoundTime] = useState(60); // 60 seconds per round
+const VersusMode = ({ onExit }) => {
+  const [player1Score, setPlayer1Score] = useState(0);
+  const [player2Score, setPlayer2Score] = useState(0);
 
-  // Placeholder for round end logic
-  const endRound = () => {
-    // Determine winner, reset health, etc.
-    setPlayer1Health(100);
-    setPlayer2Health(100);
-    setRoundTime(60);
+  const handleScoreUpdate = (player) => {
+    if (player === 1) setPlayer1Score(prev => prev + 1);
+    else setPlayer2Score(prev => prev + 1);
   };
 
   return (
     <div className="versus-mode">
       <h2>Versus Mode</h2>
-      <div className="player-huds">
-        <GameHUD health={player1Health} score={0} time={roundTime} />
-        <GameHUD health={player2Health} score={0} time={roundTime} />
+      <div className="scores">
+        <p>Player 1: {player1Score}</p>
+        <p>Player 2: {player2Score}</p>
       </div>
-      <BattleArena width={800} height={600} />
-      <button onClick={endRound}>End Round</button>
+      <button onClick={() => handleScoreUpdate(1)}>Player 1 Scores</button>
+      <button onClick={() => handleScoreUpdate(2)}>Player 2 Scores</button>
+      <button onClick={onExit}>Exit to Main Menu</button>
     </div>
   );
 };

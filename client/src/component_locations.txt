@@ -1,0 +1,92 @@
+ Volume in drive C has no label.
+ Volume Serial Number is B0F5-C82B
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src
+
+10/13/2024  07:33 PM    <DIR>          .
+10/13/2024  07:33 PM    <DIR>          ..
+10/12/2024  07:19 PM               951 App.js
+10/12/2024  05:07 PM               246 App.test.js
+10/12/2024  07:25 PM    <DIR>          components
+10/13/2024  07:33 PM                 0 component_locations.txt
+10/12/2024  09:31 PM    <DIR>          hooks
+10/12/2024  06:14 PM               426 index.css
+10/12/2024  05:07 PM               535 index.js
+10/12/2024  05:07 PM             2,632 logo.svg
+10/12/2024  05:07 PM               362 reportWebVitals.js
+10/12/2024  05:07 PM               241 setupTests.js
+10/12/2024  07:10 PM    <DIR>          styles
+10/12/2024  07:33 PM    <DIR>          tests
+               8 File(s)          5,393 bytes
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src\components
+
+10/12/2024  07:25 PM    <DIR>          .
+10/12/2024  07:25 PM    <DIR>          ..
+10/12/2024  07:28 PM    <DIR>          core
+10/12/2024  09:29 PM    <DIR>          game
+10/12/2024  11:32 PM    <DIR>          ui
+               0 File(s)              0 bytes
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src\components\core
+
+10/12/2024  07:28 PM    <DIR>          .
+10/12/2024  07:28 PM    <DIR>          ..
+10/12/2024  10:17 PM             2,162 Character.js
+10/12/2024  10:17 PM               586 Hitbox.js
+10/12/2024  10:17 PM               567 Stage.js
+10/12/2024  10:17 PM               655 Sword.js
+               4 File(s)          3,970 bytes
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src\components\game
+
+10/12/2024  09:29 PM    <DIR>          .
+10/12/2024  09:29 PM    <DIR>          ..
+10/12/2024  08:14 PM             1,331 BattleArena.js
+10/13/2024  07:29 PM               455 GameHud.js
+10/12/2024  07:08 PM             1,117 GameModes.js
+10/13/2024  07:29 PM               348 GameOver.js
+10/13/2024  07:29 PM               508 StoryMode.js
+10/13/2024  07:30 PM               505 TrainingMode.js
+10/13/2024  07:29 PM               816 VersusMode.js
+               7 File(s)          5,080 bytes
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src\components\ui
+
+10/12/2024  11:32 PM    <DIR>          .
+10/12/2024  11:32 PM    <DIR>          ..
+10/12/2024  11:32 PM             1,370 CharacterSelect.js
+10/12/2024  11:32 PM               577 ChosenCharacter.js
+10/12/2024  11:10 PM               592 MainMenu.js
+10/12/2024  11:10 PM               988 UIComponents.js
+               4 File(s)          3,527 bytes
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src\hooks
+
+10/12/2024  09:31 PM    <DIR>          .
+10/12/2024  09:31 PM    <DIR>          ..
+10/12/2024  11:35 PM               486 useAnimation.js
+10/12/2024  11:34 PM               539 useCharacterController.js
+10/12/2024  11:46 PM               412 useCollisionDetection.js
+10/12/2024  11:34 PM               636 useGameLoop.js
+10/12/2024  11:34 PM             1,760 useInput.js
+               5 File(s)          3,833 bytes
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src\styles
+
+10/12/2024  07:10 PM    <DIR>          .
+10/12/2024  07:10 PM    <DIR>          ..
+10/12/2024  11:13 PM             3,861 App.css
+               1 File(s)          3,861 bytes
+
+ Directory of C:\coding\stick_figure_kids_with_swords\client\src\tests
+
+10/12/2024  07:33 PM    <DIR>          .
+10/12/2024  07:33 PM    <DIR>          ..
+10/13/2024  07:30 PM               997 LayoutTest.css
+10/13/2024  07:30 PM             1,955 LayoutTest.js
+               2 File(s)          2,952 bytes
+
+     Total Files Listed:
+              31 File(s)         28,616 bytes
+              23 Dir(s)  18,203,746,304 bytes free

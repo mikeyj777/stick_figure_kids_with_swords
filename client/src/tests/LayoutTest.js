@@ -1,76 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import useGameLoop from '../hooks/useGameLoop';
-import useInput from '../hooks/useInput';
-import useCharacterController from '../hooks/useCharacterController';
-import useCollisionDetection from '../hooks/useCollisionDetection';
-import useAnimation from '../hooks/useAnimation';
-
-const CHARACTER_SIZE = 50;
-const OBSTACLE_SIZE = 50;
+import React, { useState } from 'react';
+import GameHUD from '../components/game/GameHud';
+import GameOver from '../components/game/GameOver';
+import StoryMode from '../components/game/StoryMode';
+import VersusMode from '../components/game/VersusMode';
+import TrainingMode from '../components/game/TrainingMode';
+import { Button } from '../components/ui/UIComponents';
 
 const LayoutTest = () => {
-  const [position, setPosition] = useState({ x: 50, y: 50 });
-  const [obstacle] = useState({ x: 200, y: 200, width: OBSTACLE_SIZE, height: OBSTACLE_SIZE });
-  const input = useInput();
-  const { updateCharacter } = useCharacterController(position, setPosition);
-  const { checkCollision } = useCollisionDetection();
-  const frames = ['Frame1', 'Frame2', 'Frame3', 'Frame4'];
-  const currentFrame = useAnimation(frames, 500);
+  const [currentMode, setCurrentMode] = useState(null);
+  const [health, setHealth] = useState(100);
+  const [score, setScore] = useState(0);
+  const [time, setTime] = useState(0);
 
-  const [frameCount, setFrameCount] = useState(0);
-
-  useGameLoop((deltaTime) => {
-    updateCharacter(input, deltaTime);
-    setFrameCount(prev => prev + 1);
-  });
-
-  const characterRect = {
-    x: position.x,
-    y: position.y,
-    width: CHARACTER_SIZE,
-    height: CHARACTER_SIZE
+  const handleExitMode = () => {
+    setCurrentMode(null);
   };
 
-  const isColliding = checkCollision(characterRect, obstacle);
+  const renderMode = () => {
+    switch(currentMode) {
+      case 'story':
+        return <StoryMode onExit={handleExitMode} />;
+      case 'versus':
+        return <VersusMode onExit={handleExitMode} />;
+      case 'training':
+        return <TrainingMode onExit={handleExitMode} />;
+      case 'gameover':
+        return <GameOver score={score} onRestart={() => setCurrentMode('story')} onMainMenu={handleExitMode} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="layout-test">
-      <h1>Hooks Test</h1>
-      
+      <h1>Game Components Test</h1>
+
       <div className="game-area">
-        <div 
-          className="character" 
-          style={{ 
-            left: position.x, 
-            top: position.y, 
-            width: CHARACTER_SIZE, 
-            height: CHARACTER_SIZE 
-          }}
-        ></div>
-        <div 
-          className="obstacle" 
-          style={{ 
-            left: obstacle.x, 
-            top: obstacle.y, 
-            width: OBSTACLE_SIZE, 
-            height: OBSTACLE_SIZE 
-          }}
-        ></div>
+        <GameHUD health={health} score={score} time={time} />
+        {renderMode()}
       </div>
-      
-      <div className="info-panel">
-        <p>Use WASD or arrow keys to move the character</p>
-        <p>Position: x: {position.x.toFixed(2)}, y: {position.y.toFixed(2)}</p>
-        <p>Obstacle Position: x: {obstacle.x.toFixed(2)}, y: {obstacle.y.toFixed(2)}</p>
-        <p>Obstacle Width: {obstacle.width.toFixed(2)}, Height: {obstacle.height.toFixed(2)}</p>
-        <p>Character Width: {characterRect.width.toFixed(2)}, Height: {characterRect.height.toFixed(2)}</p>
-        <p>Character Position: x: {characterRect.x.toFixed(2)}, y: {characterRect.y.toFixed(2)}</p>
-        
-        
-        <p>Collision: {isColliding ? 'Yes' : 'No'}</p>
-        <p>Current Animation Frame: {currentFrame}</p>
-        <p>Frame Count: {frameCount}</p>
-        <p>Input State: {JSON.stringify(input)}</p>
+
+      <div className="controls">
+        <Button onClick={() => setCurrentMode('story')}>Story Mode</Button>
+        <Button onClick={() => setCurrentMode('versus')}>Versus Mode</Button>
+        <Button onClick={() => setCurrentMode('training')}>Training Mode</Button>
+        <Button onClick={() => setCurrentMode('gameover')}>Game Over</Button>
+        <Button onClick={() => setHealth(prev => Math.max(0, prev - 10))}>Decrease Health</Button>
+        <Button onClick={() => setScore(prev => prev + 100)}>Increase Score</Button>
+        <Button onClick={() => setTime(prev => prev + 10)}>Increase Time</Button>
       </div>
     </div>
   );
